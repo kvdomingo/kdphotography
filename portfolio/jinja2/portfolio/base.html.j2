@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="{{ static('portfolio/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ static('portfolio/css/mdb.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <script src="{{ static('portfolio/js/jquery.js') }}"></script>
+    <script src="{{ static('portfolio/js/popper.js') }}"></script>
+    <script src="{{ static('portfolio/js/bootstrap.js') }}"></script>
+    <script src="{{ static('portfolio/js/mdb.js') }}"></script>
+    <script src="{{ static('portfolio/js/imagesloaded.pkgd.js') }}"></script>
+    <script src="{{ static('portfolio/js/addons/masonry.pkgd.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ static('portfolio/css/masonry.css') }}" />
+    <title>{% block title %}{% endblock %} | Kenneth Domingo Photography</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url('index') }}"><h1 class="display-4">KENNETH DOMINGO PHOTOGRAPHY</h1></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false", aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item {{ 'active' if active_page == 'index' }}">
+                    <a class="nav-link" href="{{ url('index') }}">Latest</a>
+                </li>
+                <li class="nav-item {{ 'active' if active_page == 'portfolio' }}">
+                    <a class="nav-link" href="#">Portfolio</a>
+                </li>
+                <li class="nav-item {{ 'active' if active_page == 'clients' }}">
+                    <a class="nav-link" href="#">Clients</a>
+                </li>
+                <li class="nav-item {{ 'active' if active_page == 'about' }}">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item {{ 'active' if active_page == 'booking' }}">
+                    <a class="nav-link" href="#">Booking</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    {% block body %}{% endblock %}
+
+    <footer class="container-fluid" style="padding-bottom: 0; margin: 20px auto;">
+        <div class="row">
+            <div class="col">
+                <p>&copy; {{ now.year }} Kenneth Domingo Photography</p>
+            </div>
+            <div class="col text-right">
+                <a href="https://www.instagram.com/arockentothemoon"><big class="fab fa-instagram"></big></a>
+                <a href="https://www.instagram.com/arockentothetones"><big class="fab fa-instagram"></big></a>
+                <a href="https://www.pinterest.ph/arocKENtothmoon"><big class="fab fa-pinterest"></big></a>
+                <a href="https://www.facebook.com/KennethDomingoPhotography"><big class="fab fa-facebook-square"></big></a>
+            </div>
+        </div>
+    </footer>
+    <script src="{{ static('portfolio/js/masonry.js') }}"></script>
+</body>
+</html>

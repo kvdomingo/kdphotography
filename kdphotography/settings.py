@@ -12,16 +12,21 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+import jinja2
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nq9(&7zf!4c=ikc=*gk)o17-7d*0b^xj+bes&2ta=jp3^+$(*p'
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ["DEBUG_ENVIRON"]
@@ -55,8 +60,18 @@ ROOT_URLCONF = 'kdphotography.urls'
 
 TEMPLATES = [
     {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': ['%s/jinjatemplates/' %(PROJECT_DIR)],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'kdphotography.jinja2.environment',
+            'autoescape': False,
+            'undefined': jinja2.DebugUndefined if DEBUG else jinja2.Undefined,
+        },
+    },
+    {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['portfolio.admin'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
