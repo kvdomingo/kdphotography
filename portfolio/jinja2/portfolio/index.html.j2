@@ -1,7 +1,7 @@
 {% extends 'portfolio/base.html.j2' %}
 
 {% block title %}
-    Home
+    Latest
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,9 @@
         <div class="grid-sizer"></div>
         {% for image in latest_images %}
             <div class="grid-item">
-                <img src="{{ static('portfolio/img/latest/' + image) }}">
+                <a href="{{ static('portfolio/img/latest/' + image) }}" data-toggle="lightbox" data-gallery="example-gallery">
+                    <img src="{{ static('portfolio/img/latest/' + image) }}" />
+                </a>
             </div>
         {% endfor %}
     </div>

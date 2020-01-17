@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"> -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ static('portfolio/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ static('portfolio/css/mdb.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
@@ -14,11 +15,21 @@
     <script src="{{ static('portfolio/js/addons/masonry.pkgd.js') }}"></script>
 
     <link rel="stylesheet" href="{{ static('portfolio/css/masonry.css') }}" />
+    <link rel="stylesheet" href="{{ static('portfolio/css/custom.css') }}" />
+    <script src="{{ static('portfolio/js/custom.js') }}"></script>
+    <link rel="stylesheet" href="{{ static('portfolio/css/lightbox.css') }}" />
+    <script src="{{ static('portfolio/js/lightbox.js') }}"></script>
     <title>{% block title %}{% endblock %} | Kenneth Domingo Photography</title>
+
+    <style>
+        body {
+            font-family: "Quicksand", sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url('index') }}"><h1 class="display-4">KENNETH DOMINGO PHOTOGRAPHY</h1></a>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-light" style="background-color: rgba(255, 255, 255, 0.95)">
+        <a class="navbar-brand" href="{{ url('index') }}"><h3 class="h3-responsive my-0 text-center">KENNETH DOMINGO<br />PHOTOGRAPHY</h3></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false", aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,11 +38,15 @@
                 <li class="nav-item {{ 'active' if active_page == 'index' }}">
                     <a class="nav-link" href="{{ url('index') }}">Latest</a>
                 </li>
-                <li class="nav-item {{ 'active' if active_page == 'portfolio' }}">
-                    <a class="nav-link" href="#">Portfolio</a>
+                <li class="nav-item dropdown {{ 'active' if active_page == 'portfolio' }}">
+                    <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Portfolio</a>
+                    <div class="dropdown-menu dropdown-default dropdown-menu-right float-right" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url('portraits') }}">PORTRAITS</a>
+                        <a class="dropdown-item" href="#">LIVE</a>
+                    </div>
                 </li>
                 <li class="nav-item {{ 'active' if active_page == 'clients' }}">
-                    <a class="nav-link" href="#">Clients</a>
+                    <a class="nav-link" href="{{ url('clients') }}">Clients</a>
                 </li>
                 <li class="nav-item {{ 'active' if active_page == 'about' }}">
                     <a class="nav-link" href="#">About</a>
@@ -58,5 +73,11 @@
         </div>
     </footer>
     <script src="{{ static('portfolio/js/masonry.js') }}"></script>
+    <script>
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+    </script>
 </body>
 </html>

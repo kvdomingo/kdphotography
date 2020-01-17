@@ -1,0 +1,22 @@
+{% extends 'portfolio/base.html.j2' %}
+
+{% block title %}
+    Portraits
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid" style="margin-top: 10px">
+    <div class="grid">
+        <div class="grid-sizer"></div>
+        {% for image in portraits_images %}
+            <div class="grid-item">
+                <a href="{{ static('portfolio/img/portraits/' + image) }}" data-toggle="lightbox" data-gallery="example-gallery">
+                    <img src="{{ static('portfolio/img/portraits/' + image) }}" />
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
