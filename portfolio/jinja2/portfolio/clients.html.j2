@@ -1,17 +1,17 @@
 {% extends 'portfolio/base.html.j2' %}
 
 {% block title %}
-    Portraits
+    Clients
 {% endblock %}
 
 {% block body %}
 
     <div class="container-fluid">
-    {% for client, cover, cy in cards %}
-        <div class="jumbotron card card-image" style="margin-top: 20px; background-image: url({{ static('portfolio/img/clients-landing/' + cover) }}); background-size: cover; background-position-x: 50%; background-position-y: {{ cy }};">
+    {% for client, cover, cy, page in cards %}
+        <div class="jumbotron card card-image" style="margin-top: 20px; background-image: url({{ static('portfolio/media-private/clients-landing/' + cover) }}); background-size: cover; background-position-x: 50%; background-position-y: {{ cy }};">
             <div class="text-white text-center py-5 ">
                 <div>
-                    <a class="btn btn-outline-light" style="white-space: normal;">{{ client }}</a>
+                    <a href="{{ url('clients', args=[page]) }}" class="btn btn-outline-light text-light" style="white-space: normal;">{{ client }}</a>
                 </div>
             </div>
         </div>

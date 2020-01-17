@@ -11,7 +11,7 @@
     <script src="{{ static('portfolio/js/popper.js') }}"></script>
     <script src="{{ static('portfolio/js/bootstrap.js') }}"></script>
     <script src="{{ static('portfolio/js/mdb.js') }}"></script>
-    <script src="{{ static('portfolio/js/imagesloaded.pkgd.js') }}"></script>
+    <script src="{{ static('portfolio/js/addons/imagesloaded.pkgd.js') }}"></script>
     <script src="{{ static('portfolio/js/addons/masonry.pkgd.js') }}"></script>
 
     <link rel="stylesheet" href="{{ static('portfolio/css/masonry.css') }}" />
@@ -41,18 +41,27 @@
                 <li class="nav-item dropdown {{ 'active' if active_page == 'portfolio' }}">
                     <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Portfolio</a>
                     <div class="dropdown-menu dropdown-default dropdown-menu-right float-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ url('portraits') }}">PORTRAITS</a>
-                        <a class="dropdown-item" href="#">LIVE</a>
+                        <a class="dropdown-item" href="{{ url('portfolio', args=['portraits']) }}">PORTRAITS</a>
+                        <a class="dropdown-item" href="{{ url('portfolio', args=['live']) }}">LIVE</a>
                     </div>
                 </li>
                 <li class="nav-item {{ 'active' if active_page == 'clients' }}">
-                    <a class="nav-link" href="{{ url('clients') }}">Clients</a>
+                    <a class="nav-link" href="{{ url('clients_landing') }}">Clients</a>
+                </li>
+                <li class="nav-item dropdown {{ 'active' if active_page == 'contests' }}">
+                    <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Contests</a>
+                    <div class="dropdown-menu dropdown-default dropdown-menu-right float-right" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url('samoetikerffa') }}">#SAMOETIKERFFA</a>
+                    </div>
+                </li>
+                <li class="nav-item {{ 'active' if active_page == 'shorts' }}">
+                    <a class="nav-link" href="{{ url('shorts') }}">Short Films</a>
                 </li>
                 <li class="nav-item {{ 'active' if active_page == 'about' }}">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{{ url('about') }}">About</a>
                 </li>
                 <li class="nav-item {{ 'active' if active_page == 'booking' }}">
-                    <a class="nav-link" href="#">Booking</a>
+                    <a class="nav-link" href="{{ url('booking') }}">Booking</a>
                 </li>
             </ul>
         </div>

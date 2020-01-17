@@ -4,26 +4,30 @@ from django.http import HttpResponse
 
 
 def index(request):
-    latest_dir = "portfolio/static/portfolio/img/latest/"
-    latest_images = sorted(os.listdir(latest_dir), reverse=True)
+    latest_dir_static = "portfolio/media-private/latest/"
+    latest_dir = "portfolio/static/" + latest_dir_static
+    latest_images = [latest_dir_static + f for f in sorted(os.listdir(latest_dir), reverse=True)]
     context = {
         "active_page": "index",
-        "latest_images": latest_images,
+        "image_src": latest_images,
+        "html_title": "Latest",
     }
-    return render(request, "portfolio/index.html.j2", context)
+    return render(request, "portfolio/gallery_template.html.j2", context)
 
 
-def portraits(request):
-    portraits_dir = "portfolio/static/portfolio/img/portraits/"
-    portraits_images = sorted(os.listdir(portraits_dir), reverse=True)
+def portfolio(request, subpage):
+    img_dir_static = f"portfolio/media-private/{subpage}/"
+    img_dir = "portfolio/static/" + img_dir_static
+    img_src = [img_dir_static + f for f in sorted(os.listdir(img_dir), reverse=True)]
     context = {
         "active_page": "portfolio",
-        "portraits_images": portraits_images,
+        "image_src": img_src,
+        "html_title": "Portraits",
     }
-    return render(request, "portfolio/portraits.html.j2", context)
+    return render(request, "portfolio/gallery_template.html.j2", context)
 
 
-def clients(request):
+def clients_landing(request):
     client_list = [
         "UP CLUB FOR THE ENVIRONMENT AND TOURISM",
         "UP SIGMA ALPHA NU SORORITY",
@@ -38,9 +42,66 @@ def clients(request):
         "upcos2019.jpg",
         "uppda2019.jpg",
     ]
-    percent_centery = ["45%", "45%", "15%", "45%", "40%"]
+    percent_centery = [
+        "45%",
+        "45%",
+        "15%",
+        "45%",
+        "40%"
+    ]
+    url_list = [
+        "upecotour",
+        "upsan",
+        "uprotc",
+        "upcos",
+        "uppda",
+    ]
     context = {
         "active_page": "clients",
-        "cards": zip(client_list, cover_list, percent_centery),
+        "cards": zip(client_list, cover_list, percent_centery, url_list),
     }
     return render(request, "portfolio/clients.html.j2", context)
+
+
+def clients(request, subpage):
+    img_dir_static = f"portfolio/media-private/clients-{subpage}/"
+    img_dir = "portfolio/static/" + img_dir_static
+    img_src = [img_dir_static + f for f in sorted(os.listdir(img_dir), reverse=True)]
+    context = {
+        "active_page": "clients",
+        "image_src": img_src,
+        "html_title": "Clients",
+    }
+    return render(request, "portfolio/gallery_template.html.j2", context)
+
+
+def samoetikerffa(request):
+    context = {
+        "html_title": "#samoetikerffa",
+        "active_page": "contests"
+    }
+    return render(request, "portfolio/construction.html.j2", context)
+
+
+def shorts(request):
+    context = {
+        "html_title": "Short Films",
+        "active_page": "shorts"
+    }
+    return render(request, "portfolio/construction.html.j2", context)
+
+
+def about(request):
+    context = {
+        "html_title": "About",
+        "active_page": "about"
+    }
+    return render(request, "portfolio/construction.html.j2", context)
+
+
+def booking(request):
+    context = {
+        "html_title": "Booking",
+        "active_page": "booking"
+    }
+    return render(request, "portfolio/construction.html.j2", context)
