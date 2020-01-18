@@ -1,12 +1,27 @@
 import os
 from django.shortcuts import render
 from django.http import HttpResponse
+from boto3 import client
+from dotenv import load_dotenv
+
+
+load_dotenv()
+if os.environ["FILESYSTEM_SYS"] == "AWS":
+    conn = client("s3")
+
+
+def file_handler(directory):
+    if os.environ["FILESYSTEM_SYS"] == "local":
+        return os.listdir(directory)
+    elif os.environ["FILESYSTEM_SYS"] == "AWS":
+        conn_result = conn.list_objects(Bucket=os.environ["S3_BUCKET_NAME"], Prefix=directory)
+        return [key["Key"] for key in conn_result["Contents"]]
 
 
 def index(request):
     latest_dir_static = "portfolio/media-private/latest/"
     latest_dir = "portfolio/static/" + latest_dir_static
-    latest_images = [latest_dir_static + f for f in sorted(os.listdir(latest_dir), reverse=True)]
+    latest_images = [latest_dir_static + f for f in sorted(file_handler(latest_dir), reverse=True)]
     context = {
         "active_page": "index",
         "image_src": latest_images,
@@ -18,7 +33,7 @@ def index(request):
 def portfolio(request, subpage):
     img_dir_static = f"portfolio/media-private/{subpage}/"
     img_dir = "portfolio/static/" + img_dir_static
-    img_src = [img_dir_static + f for f in sorted(os.listdir(img_dir), reverse=True)]
+    img_src = [img_dir_static + f for f in sorted(file_handler(img_dir), reverse=True)]
     context = {
         "active_page": "portfolio",
         "image_src": img_src,
@@ -66,7 +81,7 @@ def clients_landing(request):
 def clients(request, subpage):
     img_dir_static = f"portfolio/media-private/clients-{subpage}/"
     img_dir = "portfolio/static/" + img_dir_static
-    img_src = [img_dir_static + f for f in sorted(os.listdir(img_dir), reverse=True)]
+    img_src = [img_dir_static + f for f in sorted(file_handler(img_dir), reverse=True)]
     context = {
         "active_page": "clients",
         "image_src": img_src,

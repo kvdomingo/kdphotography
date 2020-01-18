@@ -140,8 +140,6 @@ if os.environ["FILESYSTEM_SYS"] == "AWS":
         'CacheControl': 'max-age=86400',
     }
 
-    AWS_LOCATION = 'static'
-
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'portfolio/static')
     ]
