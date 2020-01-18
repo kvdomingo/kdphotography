@@ -143,7 +143,7 @@ if os.environ["FILESYSTEM_SYS"] == "AWS":
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'portfolio/static')
     ]
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 elif os.environ["FILESYSTEM_SYS"] == "local":
     STATIC_URL = '/static/'
