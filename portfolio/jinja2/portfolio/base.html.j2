@@ -19,7 +19,17 @@
     <script src="{{ static('portfolio/js/custom.js') }}"></script>
     <link rel="stylesheet" href="{{ static('portfolio/css/lightbox.css') }}" />
     <script src="{{ static('portfolio/js/lightbox.js') }}"></script>
+
     <title>{% block title %}{% endblock %} | Kenneth Domingo Photography</title>
+    <meta name="description" content="Portfolio and booking website of Kenneth Domingo Photography, created, managed, and maintained by Kenneth V. Domingo, based in Quezon City, Philippines." />
+    <meta property="og:title" content="Kenneth Domingo Photography" />
+    <meta property="og:url" content="http://kdphotography.herokuapp.com" />
+    <meta name="og:description" content="Portfolio and booking website of Kenneth Domingo Photography, created, managed, and maintained by Kenneth V. Domingo, based in Quezon City, Philippines." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="@rockentothemoon" />
+    <meta property="twitter:creator" content="@rockentothemoon" />
 
     <style>
         body {
@@ -74,10 +84,10 @@
                 <p>&copy; {{ now.year }} Kenneth Domingo Photography</p>
             </div>
             <div class="col text-right">
-                <a href="https://www.instagram.com/arockentothemoon"><big class="fab fa-instagram"></big></a>
-                <a href="https://www.instagram.com/arockentothetones"><big class="fab fa-instagram"></big></a>
-                <a href="https://www.pinterest.ph/arocKENtothmoon"><big class="fab fa-pinterest"></big></a>
-                <a href="https://www.facebook.com/KennethDomingoPhotography"><big class="fab fa-facebook-square"></big></a>
+                <a href="https://www.instagram.com/arockentothemoon" target="_blank"><big class="fab fa-instagram"></big></a>
+                <a href="https://www.instagram.com/arockentothetones" target="_blank"><big class="fab fa-instagram"></big></a>
+                <a href="https://www.pinterest.ph/arocKENtothmoon" target="_blank"><big class="fab fa-pinterest"></big></a>
+                <a href="https://www.facebook.com/KennethDomingoPhotography" target="_blank"><big class="fab fa-facebook-square"></big></a>
             </div>
         </div>
     </footer>

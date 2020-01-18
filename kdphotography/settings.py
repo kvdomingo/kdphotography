@@ -149,6 +149,11 @@ if os.environ["FILESYSTEM_SYS"] == "aws":
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'portfolio/static')
 ]
+elif os.environ["FILESYSTEM_SYS"] == "dropbox":
+    DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+    DROPBOX_OAUTH2_TOKEN = os.environ["DROPBOX_ACCESS_TOKEN"]
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 elif os.environ["FILESYSTEM_SYS"] == "local":
     STATIC_URL = '/static/'
 

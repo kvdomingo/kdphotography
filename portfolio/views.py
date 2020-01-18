@@ -11,10 +11,9 @@ S3_CUSTOM_DOMAIN = "https://kdphotography-assets.s3.amazonaws.com/"
 load_dotenv()
 if ON_AWS:
     conn = client("s3")
-    STATIC_PREFIX = "portfolio/static/portfolio/"
-else:
-    STATIC_PREFIX = ""
-MEDIA_PRIVATE_PREFIX = STATIC_PREFIX + "media-private/"
+STATIC_PREFIX = "portfolio/static/portfolio"
+MEDIA_PRIVATE_PREFIX = f"{STATIC_PREFIX}/media-private"
+MEDIA_STATIC_PREFIX = "portfolio/media-private"
 
 
 def file_handler(directory):
@@ -26,10 +25,10 @@ def file_handler(directory):
 
 
 def index(request):
-    LATEST_PREFIX = MEDIA_PRIVATE_PREFIX + "latest/"
+    LATEST_PREFIX = f"{MEDIA_PRIVATE_PREFIX}/latest/"
     latest_images = []
     for f in sorted(file_handler(LATEST_PREFIX), reverse=True):
-            latest_images.append(S3_CUSTOM_DOMAIN + f if ON_AWS else "/".join(f.split("/")[2:]))
+        latest_images.append(S3_CUSTOM_DOMAIN + f if ON_AWS else "/".join((LATEST_PREFIX + f).split("/")[1:]))
     context = {
         "active_page": "index",
         "image_src": latest_images,
@@ -39,10 +38,10 @@ def index(request):
 
 
 def portfolio(request, subpage):
-    PREFIX = MEDIA_PRIVATE_PREFIX + subpage
+    PREFIX = f"{MEDIA_PRIVATE_PREFIX}/{subpage}"
     img_src = []
     for f in sorted(file_handler(PREFIX), reverse=True):
-        img_src.append(S3_CUSTOM_DOMAIN + f if ON_AWS else "/".join(f.split("/")[2:]))
+        img_src.append(S3_CUSTOM_DOMAIN + f if ON_AWS else static(f"{MEDIA_STATIC_PREFIX}/{subpage}/{f}"))
     context = {
         "active_page": "portfolio",
         "image_src": img_src,
@@ -81,10 +80,10 @@ def clients_landing(request):
         "uppda",
     ]
 
-    PREFIX = MEDIA_PRIVATE_PREFIX + "clients-landing/"
+    PREFIX = f"{MEDIA_PRIVATE_PREFIX}/clients-landing/"
     img_src = []
     for f in cover_list:
-        img_src.append(S3_CUSTOM_DOMAIN + PREFIX + f if ON_AWS else "/".join((PREFIX + f).split("/")[2:]))
+        img_src.append(S3_CUSTOM_DOMAIN + PREFIX + f if ON_AWS else "/".join((PREFIX + f).split("/")[1:]))
     context = {
         "active_page": "clients",
         "cards": zip(client_list, img_src, percent_centery, url_list),
@@ -93,10 +92,10 @@ def clients_landing(request):
 
 
 def clients(request, subpage):
-    PREFIX = MEDIA_PRIVATE_PREFIX + "clients-" + subpage
+    PREFIX = f"{MEDIA_PRIVATE_PREFIX}/clients-{subpage}"
     img_src = []
     for f in sorted(file_handler(PREFIX), reverse=True):
-        img_src.append(S3_CUSTOM_DOMAIN + f if ON_AWS else "/".join(f.split("/")[2:]))
+        img_src.append(S3_CUSTOM_DOMAIN + f if ON_AWS else static(f"{MEDIA_STATIC_PREFIX}/clients-{subpage}/{f}"))
     context = {
         "active_page": "clients",
         "image_src": img_src,
@@ -106,11 +105,16 @@ def clients(request, subpage):
 
 
 def samoetikerffa(request):
+    PREFIX = f"{MEDIA_PRIVATE_PREFIX}/samoetikerffa"
+    img_src = []
+    for f in sorted(file_handler(PREFIX), reverse=True):
+        img_src.append(S3_CUSTOM_DOMAIN + f if ON_AWS else static(f"{MEDIA_STATIC_PREFIX}/samoetikerffa/{f}"))
     context = {
         "html_title": "#samoetikerffa",
-        "active_page": "contests"
+        "active_page": "contests",
+        "image_src": img_src,
     }
-    return render(request, "portfolio/construction.html.j2", context)
+    return render(request, "portfolio/gallery_template.html.j2", context)
 
 
 def shorts(request):
