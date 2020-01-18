@@ -11,8 +11,8 @@
         <div class="grid-sizer"></div>
         {% for image in image_src %}
             <div class="grid-item">
-                <a href="{{ static(image) }}" data-toggle="lightbox" data-gallery="example-gallery">
-                    <img src="{{ static(image) }}" />
+                <a href="{{ image }}" data-toggle="lightbox" data-gallery="example-gallery">
+                    <img src="{{ image }}" />
                 </a>
             </div>
         {% endfor %}

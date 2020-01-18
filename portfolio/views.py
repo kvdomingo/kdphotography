@@ -1,27 +1,35 @@
 import os
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.templatetags.static import static
 from boto3 import client
 from dotenv import load_dotenv
 
 
+ON_AWS = (os.environ["FILESYSTEM_SYS"] == "aws")
+S3_CUSTOM_DOMAIN = "https://kdphotography-assets.s3.amazonaws.com/"
 load_dotenv()
-if os.environ["FILESYSTEM_SYS"] == "AWS":
+if ON_AWS:
     conn = client("s3")
+    STATIC_PREFIX = "portfolio/static/portfolio/"
+else:
+    STATIC_PREFIX = ""
+MEDIA_PRIVATE_PREFIX = STATIC_PREFIX + "media-private/"
 
 
 def file_handler(directory):
-    if os.environ["FILESYSTEM_SYS"] == "local":
+    if not ON_AWS:
         return os.listdir(directory)
-    elif os.environ["FILESYSTEM_SYS"] == "AWS":
+    else:
         conn_result = conn.list_objects(Bucket=os.environ["S3_BUCKET_NAME"], Prefix=directory)
         return [key["Key"] for key in conn_result["Contents"]]
 
 
 def index(request):
-    latest_dir_static = "portfolio/media-private/latest/"
-    latest_dir = "portfolio/static/" + latest_dir_static
-    latest_images = [latest_dir_static + f for f in sorted(file_handler(latest_dir), reverse=True)]
+    LATEST_PREFIX = MEDIA_PRIVATE_PREFIX + "latest/"
+    latest_images = []
+    for f in sorted(file_handler(LATEST_PREFIX), reverse=True):
+            latest_images.append(S3_CUSTOM_DOMAIN + f if ON_AWS else "/".join(f.split("/")[2:]))
     context = {
         "active_page": "index",
         "image_src": latest_images,
@@ -31,9 +39,10 @@ def index(request):
 
 
 def portfolio(request, subpage):
-    img_dir_static = f"portfolio/media-private/{subpage}/"
-    img_dir = "portfolio/static/" + img_dir_static
-    img_src = [img_dir_static + f for f in sorted(file_handler(img_dir), reverse=True)]
+    PREFIX = MEDIA_PRIVATE_PREFIX + subpage
+    img_src = []
+    for f in sorted(file_handler(PREFIX), reverse=True):
+        img_src.append(S3_CUSTOM_DOMAIN + f if ON_AWS else "/".join(f.split("/")[2:]))
     context = {
         "active_page": "portfolio",
         "image_src": img_src,
@@ -71,17 +80,23 @@ def clients_landing(request):
         "upcos",
         "uppda",
     ]
+
+    PREFIX = MEDIA_PRIVATE_PREFIX + "clients-landing/"
+    img_src = []
+    for f in cover_list:
+        img_src.append(S3_CUSTOM_DOMAIN + PREFIX + f if ON_AWS else "/".join((PREFIX + f).split("/")[2:]))
     context = {
         "active_page": "clients",
-        "cards": zip(client_list, cover_list, percent_centery, url_list),
+        "cards": zip(client_list, img_src, percent_centery, url_list),
     }
     return render(request, "portfolio/clients.html.j2", context)
 
 
 def clients(request, subpage):
-    img_dir_static = f"portfolio/media-private/clients-{subpage}/"
-    img_dir = "portfolio/static/" + img_dir_static
-    img_src = [img_dir_static + f for f in sorted(file_handler(img_dir), reverse=True)]
+    PREFIX = MEDIA_PRIVATE_PREFIX + "clients-" + subpage
+    img_src = []
+    for f in sorted(file_handler(PREFIX), reverse=True):
+        img_src.append(S3_CUSTOM_DOMAIN + f if ON_AWS else "/".join(f.split("/")[2:]))
     context = {
         "active_page": "clients",
         "image_src": img_src,

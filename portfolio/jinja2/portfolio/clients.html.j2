@@ -8,7 +8,7 @@
 
     <div class="container-fluid">
     {% for client, cover, cy, page in cards %}
-        <div class="jumbotron card card-image" style="margin-top: 20px; background-image: url({{ static('portfolio/media-private/clients-landing/' + cover) }}); background-size: cover; background-position-x: 50%; background-position-y: {{ cy }};">
+        <div class="jumbotron card card-image" style="margin-top: 20px; background-image: url({{ cover }}); background-size: cover; background-position-x: 50%; background-position-y: {{ cy }};">
             <div class="text-white text-center py-5 ">
                 <div>
                     <a href="{{ url('clients', args=[page]) }}" class="btn btn-outline-light text-light" style="white-space: normal;">{{ client }}</a>
