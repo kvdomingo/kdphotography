@@ -158,4 +158,5 @@ elif os.environ["FILESYSTEM_SYS"] == "local":
     STATIC_URL = '/static/'
 
 
-django_heroku.settings(locals())
+if bool(int(os.environ["ON_HEROKU"])):
+    django_heroku.settings(locals())
