@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import django_heroku
 import jinja2
+import cloudinary
 from dotenv import load_dotenv
 
 
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -155,6 +157,13 @@ elif os.environ["FILESYSTEM_SYS"] == "dropbox":
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 elif os.environ["FILESYSTEM_SYS"] == "local":
+    STATIC_URL = '/static/'
+elif os.environ["FILESYSTEM_SYS"] == "cloudinary":
+    cloudinary.config(
+        cloud_name=os.environ["CLOUDINARY_NAME"],
+        api_key=os.environ["CLOUDINARY_API_KEY"],
+        api_secret=os.environ["CLOUDINARY_API_SECRET"]
+    )
     STATIC_URL = '/static/'
 
 

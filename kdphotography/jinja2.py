@@ -1,3 +1,4 @@
+import cloudinary
 from django.templatetags.static import static
 from django.urls import reverse
 from jinja2 import Environment
@@ -10,5 +11,6 @@ def environment(**options):
         'static': static,
         'url': reverse,
         'now': datetime.now(),
+        'cloudinary': cloudinary,
     })
     return env
